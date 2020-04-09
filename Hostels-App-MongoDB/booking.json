@@ -1,0 +1,1 @@
+{"_id":{"$oid":"5e74958fca0a1a7b83216d23"},"userName":"kaushal","hostelName":"Prabhu's Place","fromDate":"2020-03-21","toDate":"2020-03-25","totalDays":{"$numberInt":"4"},"rent":{"$numberInt":"5000"},"bedsBooked":{"$numberInt":"4"},"_class":"com.react.hostel.Booking"}
