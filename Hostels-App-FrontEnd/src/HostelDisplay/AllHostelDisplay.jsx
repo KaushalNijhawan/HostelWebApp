@@ -7,12 +7,14 @@ import NavDisplay from "../NavBar/navbar";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { Redirect } from 'react-router-dom';
+import LoggedInNabar from "../NavBar/LoggedInNavbar";
 class AllHostelDetails extends React.Component {
   
   constructor(props){
     super(props);
+    console.log(this.props);
     this.state={
-      namee:"",
+      
       hostels: [],
       hostel:{
           hostelName:"",
@@ -20,7 +22,13 @@ class AllHostelDetails extends React.Component {
         imgUrl:""
       },
       name : this.props.match.params.id,
-      logged:this.props.location.state.logged
+      loggLocations:this.props.location.state.logging,
+      loggHome:this.props.location.state.logged,
+      logged:false,
+      customerLogged:this.props.location.state?.customerLogged,
+      ownerLogged:this.props.location.state?.ownerLogged,
+      username:this.props.location.state?.name
+
     }
   }
   handleClick=()=>{
@@ -34,17 +42,23 @@ class AllHostelDetails extends React.Component {
         
         })
     }) 
-    let data = this.state.hostels.filter((host) => host.hostelName===this.state.name);
-    this.setState({hostel : data})
-    // if(this.state.logged ===  false){
-    //   return <Redirect to="/login"></Redirect>
-    // }
-   console.log(this.state.hostel);
+    
+   
+   
      
 }    
 RedirectionOfPage=()=>{
-  if(this.state.logged===false){
-    return <Redirect to="/login"></Redirect>
+  if(this.state.loggHome===false || this.state.loggLocations===false){
+    return (<Redirect to={{pathname:"/login",
+       state:{
+          name: this.state.name,
+          customerLogged:this.state.customerLogged,
+          ownerLogged:this.state.ownerLogged,
+          username:this.state.username,
+          coming:"Home"
+
+       }
+  }}/>)
   }
 }
        
@@ -53,7 +67,7 @@ RedirectionOfPage=()=>{
          
    return (
     <div>
-           <NavDisplay/>
+           {this.state.loggHome ||this.state.loggLocations ? <LoggedInNabar name={this.state.username} customer ={this.state.customerLogged} owner ={this.state.ownerLogged}></LoggedInNabar> : <NavDisplay logging ={this.state.logged}/>}
             <div class="jumbotron jumbotron-fluid">
                 <div class="container">
     <h1 class="display-4">{data[0]?.hostelName}</h1>
@@ -143,17 +157,27 @@ RedirectionOfPage=()=>{
                 </div>
                  <div class="wrap"> 
                                    {/* <Link to="/booknow">  */} 
-                                
-                 <a href={"/booknow/" + data[0]?.hostelName} type="button" class="btn btn-info" style ={{margin : "80px"}} >Book Now</a>
-                {/* <a href={"/booknow/" + data[0]?.hostelName} type="button" class="btn btn-info">Add Review</a> */}
-                  {/* </Link> */}
+                             {this.RedirectionOfPage()}   
+                 <Link to={{
+                   pathname:"/booknow/" + data[0]?.hostelName,
+                   state:{
+                     customerLogged:this.state.customerLogged,
+                     ownerLogged:this.state.ownerLogged,
+                     name:this.state.name,
+                     username:this.state.username,
+                     coming:"Location",
+                     logged:true
+                   }
+                 }}  type="button" class="btn btn-info" style ={{margin : "80px"}} >Book Now</Link>
+                
+              
                   </div>  
              </div> 
  </div>
      </div>
  </div>
  <br></br>
-  {this.RedirectionOfPage()}
+
  <FooterDisplay/>  
 
 </div>

@@ -49,7 +49,7 @@ class Signup extends React.Component {
           }
           redirectPage = ()=>{
               if(this.state.type === "Customer" && this.state.isSuccess === "success"){
-                  return <Redirect to="/"></Redirect>
+                  return <Redirect to="/login"></Redirect>
               }
           }
 

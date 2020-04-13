@@ -7,12 +7,23 @@ import Card from 'react-bootstrap/Card';
 import './review-styles.css'
 import NavDisplay from './NavBar/navbar';
 import FooterDisplay from './HostelDisplay/footer';
+import LoggedInNabar from './NavBar/LoggedInNavbar';
 
 class Review extends React.Component {
+  constructor(props){
+    super(props);
+    this.state={
+      logged:this.props.location.state?.logged,
+      name:this.props.location.state?.name,
+      customerLogged : this.props.location.state?.customerLogged,
+      ownerLogged:this.props.location.state?.ownerLogged
+    }
+  }
+
   render() {
     return (
       <div>
-      <NavDisplay />
+       {this.state.logged===true ? <LoggedInNabar name={this.state.name} customer ={this.state.customerLogged} owner ={this.state.ownerLogged}></LoggedInNabar> : <NavDisplay logging ={this.state.logged}/>}
       <div class="jumbotron">
         <h1 class="display-4">Guest Reviews!</h1>
         {/* <p class="lead">Guest Reviews</p> */}

@@ -1,12 +1,16 @@
 import React from "react";
 import NavDisplay from "../NavBar/navbar";
 import "./profiles.css";
+import LoggedInNabar from "../NavBar/LoggedInNavbar";
 
 class ProfileShow extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      logged:this.props
+      logged:this.props.location.state?.logged,
+      name:this.props.location.state?.name,
+      customerLogged : this.props.location.state?.customerLogged,
+      ownerLogged:this.props.location.state?.ownerLogged
     }
   }
   componentDidMount(){
@@ -14,7 +18,7 @@ class ProfileShow extends React.Component{
   }
    render(){
        return(<div>
-   <NavDisplay />
+  {this.state.logged===true ? <LoggedInNabar name={this.state.name} customer ={this.state.customerLogged} owner ={this.state.ownerLogged}></LoggedInNabar> : <NavDisplay logging ={this.state.logged}/>}
         <br></br>
         <div class="container">
   <div class="row">

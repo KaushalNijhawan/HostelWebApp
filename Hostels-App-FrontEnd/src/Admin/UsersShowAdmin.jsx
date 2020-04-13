@@ -1,12 +1,16 @@
 import React from 'react';
 import Axios from 'axios';
 import NavDisplay from '../NavBar/navbar';
+import LoggedInNabar from '../NavBar/LoggedInNavbar';
 
 class UsersShowAdmin extends React.Component{
-   constructor(){
-       super();
+   constructor(props){
+       super(props);
+       console.log(this.props);
        this.state={
-        usersArray:[]
+        usersArray:[],
+        name:this.props.location.state.name,
+        logged:this.props.location.state.logged
        }
    }
    
@@ -33,7 +37,7 @@ class UsersShowAdmin extends React.Component{
     
           ));
      return(<div>
-        <NavDisplay/>
+        {this.state.logged===true ? <LoggedInNabar name ={this.state.name}/> : <NavDisplay/>}
         <div class="jumbotron jumbotron-fluid">
   <div class="container">
     <h1 class="display-4">HOLA!</h1>

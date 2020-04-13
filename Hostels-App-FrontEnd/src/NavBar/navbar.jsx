@@ -5,7 +5,7 @@ class NavDisplay extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      logged : this.props.logging
+      logged : false
     }
   }
   componentDidMount(){
@@ -22,18 +22,29 @@ class NavDisplay extends React.Component{
   <div className="collapse navbar-collapse" id="navbarNav">
     <ul className="navbar-nav">
       <li className="nav-item active">
-      <a href="/profiles" class="nav-link">About us<span className="sr-only">(current)</span></a>
+      <Link to={{
+        pathname:"/profiles",
+        state:{
+          logged: this.state.logged
+        }
+      }}href="/profiles" class="nav-link">About us<span className="sr-only">(current)</span></Link>
       </li>
       <li className="nav-item">
        
-      <a href="/displayDest" className="nav-link" >Locations</a> 
+      <Link to ={{
+        pathname:"/displayDest/",
+        state:{logged:this.state.logged}
+      }} className="nav-link" >Locations</Link> 
       </li>
-      <li className="nav-item">
-        <a href="/hosteladd" className="nav-link" >Add Hostel</a>
-      </li>
-      <li classname="nav-item">
-        <a href="/review" className="nav-link">Reviews</a>
-      </li> 
+      
+      {/* <li classname="nav-item">
+        <Link to={{
+          pathname:"/review",
+          state:{
+            logged:this.state.logged
+          }
+        }} className="nav-link">Reviews</Link>
+      </li>  */}
      
     </ul>
   </div>

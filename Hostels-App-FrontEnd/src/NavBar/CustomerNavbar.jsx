@@ -19,6 +19,9 @@ class CustomerNavbar extends React.Component{
       
       <li classname="nav-item">
         <a href="/review" className="nav-link">Reviews</a>
+      </li>
+      <li classname="nav-item">
+        <a href="/UserBooking" className="nav-link">Bookings</a>
       </li> 
      
     </ul>

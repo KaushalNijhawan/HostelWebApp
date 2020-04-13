@@ -27,6 +27,7 @@ import BookingShow from "./Admin/BookingsShow";
 import UsersShowAdmin from "./Admin/UsersShowAdmin";
 import AddingCities from "./Admin/AddingCities";
 import OwnerRequest from "./Admin/OwnerRequest";
+import GetBookings from "./NavBar/GetBooking";
 
 class RoutingHostels extends React.Component {
   constructor(props){
@@ -40,8 +41,8 @@ class RoutingHostels extends React.Component {
       <Router>
         <Switch>
 
-          <Route path="/displayDest" {... this.state.logged}>
-            <DisplayDestination />
+          <Route path="/displayDest" component={DisplayDestination}>
+           
           </Route>
          
            <Route path="/signup">
@@ -51,20 +52,20 @@ class RoutingHostels extends React.Component {
             
           </Route>
           <Route path="/city/:city" component={HostelCity}></Route>
-          <Route path="/hosteladd">
-            <HostelAdd />
+          <Route path="/hosteladd" component={HostelAdd}>
+          
           </Route>
-          <Route path="/review">
-            <Review/>
+          <Route path="/review" component={Review}>
+           
           </Route>
-          <Route path="/profiles">
-            <ProfileShow/>
+          <Route path="/profiles" component={ProfileShow}>
+           
           </Route>
           
           <Route path="/success/:hname/:username" component = {SuccessPage}>
          
           </Route>
-          <Route path="/canceled/:username/:hname" component = {CancelledBooking}>
+          <Route path="/canceled/:usernames" component = {CancelledBooking}>
          
           </Route>
           <Route path="/confirmed" component = {BookingConfirmation}>
@@ -83,14 +84,11 @@ class RoutingHostels extends React.Component {
             <Route path="/admin"  component = {AdminDisplay}>
             </Route>
             
-          <Route path="/login">  
-            <Login />
+          <Route path="/login" component={Login}>  
+          
           </Route>
-         
-          <Route
-  path='/'
-  render={(props) => <HomePage {...props} />}
-/>
+         <Route path="/getBookings" component={GetBookings} ></Route>
+          <Route path='/' component={HomePage} />
             
           
         </Switch>

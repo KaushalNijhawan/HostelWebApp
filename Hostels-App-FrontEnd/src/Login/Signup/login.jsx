@@ -17,7 +17,8 @@ class Login extends React.Component {
             type:"",
             AdminLoged:false,
             customerLogged:false,
-            OwnerLogged:false
+            OwnerLogged:false,
+            name:this.props.location.state?.name
         }
     }
     handleUsername = (e) => {
@@ -34,8 +35,9 @@ class Login extends React.Component {
         event.preventDefault();
         Axios.post('http://localhost:8080/login', user)
             .then(res => {
+                this.setState({type:res.data})
                 if (res.data === "Customer") {
-                   
+                    
                     this.setState({ error : res.data})
                     this.setState({ isLogin: true })
                     this.setState({customerLogged:true})
@@ -53,21 +55,62 @@ class Login extends React.Component {
             
     }
     RedirectionOfPage = () => {
-        console.log(this.state.AdminLoged);
-        console.log(this.state.customerLogged);
-        console.log(this.state.isLogin);
+        // console.log(this.state.AdminLoged);
+        // console.log(this.state.customerLogged);
+        // console.log(this.state.isLogin);
         if (this.state.isLogin === true && this.state.AdminLoged === true) {
             return (<Redirect to={{
                 pathname: '/admin',
-                state: { userType: this.state.userName}       
+                state: { 
+                    userType: this.state.userName,
+                    logged:true
+                }       
             }} />)
-        }else if(this.state.isLogin === true && this.state.customerLogged ===true){
+        }else if(this.state.isLogin === true && this.state.customerLogged ===true && typeof this.state.name!=="undefined"){
+            return (<Redirect to={{
+                pathname: '/booknow/'+this.state.name,
+                state: { 
+                    
+                    hostelName:this.state.name,
+                    login:this.state.isLogin,
+                    username:this.state.userName,
+                    customerLogged:this.state.customerLogged,
+                    ownerLogged:this.state.OwnerLogged,
+                    coming:"Home"
+                }
+                     
+            }} />)
+        }
+        else if(this.state.isLogin === true && this.state.customerLogged ===  true && typeof this.state.name === "undefined"){
             return (<Redirect to={{
                 pathname: '/',
-                state: { customerLogged :this.state.customerLogged}
+                state: { 
+                    customerLogged :this.state.customerLogged,
+                   
+                    username:this.state.userName,
+                    type:this.state.type,
+                    logged:true
+                }
+                     
+            }} />)
+        }
+        else if(this.state.isLogin === true && this.state.OwnerLogged === true){
+            return (<Redirect to={{
+                pathname: '/',
+                state: { 
+                    ownerLogged :this.state.OwnerLogged,
+                   
+                    username:this.state.userName,
+                    type:this.state.type,
+                    logged:true
+                }
+                     
             }} />)
         }
 
+    }
+    componentDidMount=()=>{
+        console.log(typeof this.state.name)
     }
     render() {
 

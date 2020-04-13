@@ -3,7 +3,7 @@ import FooterDisplay from './HostelDisplay/footer';
 import NavDisplay from './NavBar/navbar';
 import Axios from "axios";
 import { Redirect } from "react-router-dom";
-import { Message, Form } from "semantic-ui-react";
+import LoggedInNabar from "./NavBar/LoggedInNavbar";
 
 class HostelAdd extends React.Component{
   constructor(props){
@@ -20,7 +20,11 @@ class HostelAdd extends React.Component{
       hprice: 0,
       hImgUrl:"",
       message : "failure",
-      error: true
+      error: true,
+      customer:this.props.location.state?.customerLogged,
+      ownerLogged:this.props.location.state?.ownerLogged,
+      name:this.props.location.state?.name,
+      logged:this.props.location.state?.logged
 
 
     }
@@ -94,7 +98,7 @@ class HostelAdd extends React.Component{
   }
     render(){
         return(<div>
-        <NavDisplay/>
+        {this.state.logged===true ? <LoggedInNabar name={this.state.name} customer ={this.state.customerLogged} owner ={this.state.ownerLogged}/> : <NavDisplay logging ={this.state.logged}/>}
             <div class="jumbotron jumbotron-fluid">
   <div class="container">
     <h1 class="display-4">Hostel Addition</h1>
@@ -103,19 +107,7 @@ class HostelAdd extends React.Component{
 </div>
 <br></br>
 <br></br>
-{!this.state.error ? (
-            <Message
-              positive
-              header="Your user registration was successful"
-              content="You may now log-in with the username you have chosen"
-            />
-          ) : (
-            <Message
-              negative
-              header=""
-             
-            />
-          )}
+
 <div class = "container">
     <form onSubmit ={this.SubmitForm}>
   <div class="form-group row">

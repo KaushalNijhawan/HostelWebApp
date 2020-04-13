@@ -274,6 +274,59 @@ public String acceptingRequest(Hostel obj) {
 	return "accepted";
 }
 
+public String confirmBooking(Booking booking) {
+	MongoTemplate mt = getConnection();
+	mt.insert(booking , "BookingConfirmation");
+	return "success";
+}
+
+public String acceptConfirm(String userName) {
+	MongoTemplate mt = getConnection();
+	Query query = new Query();
+	query.addCriteria(Criteria.where("userName").is(userName));
+	Booking obj = mt.findOne(query,Booking.class,"BookingConfirmation");
+	System.out.println(obj.toString());
+	mt.insert(obj,"bookings");
+	mt.remove(query,Booking.class,"BookingConfirmation");
+	return "AcceptedBooking";
+}
+
+public String rejectConfirm(String userName) {
+	MongoTemplate mt = getConnection();
+	Query query = new Query();
+	query.addCriteria(Criteria.where("userName").is(userName));
+    mt.remove(query,Booking.class,"BookingConfirmation");
+	return "CancelledBooking";
+}
+
+public long displayBookingsCount() {
+	MongoTemplate mt = getConnection();
+	MongoCollection<Document> book = mt.getCollection("bookings");
+	return book.countDocuments();
+}
+
+public long displayHostelsCount() {
+	MongoTemplate mt = getConnection();
+	MongoCollection<Document> hostel = mt.getCollection("hostels");
+	return hostel.countDocuments();
+}
+
+public long displayCityCount() {
+	MongoTemplate mt = getConnection();
+	MongoCollection city = mt.getCollection("city");
+	
+	return city.countDocuments();
+}
+
+public List<Booking> getBooking(String username) {
+	MongoTemplate mt = getConnection();
+	Query query = new Query();
+	query.addCriteria(Criteria.where("userName").is(username));
+	List<Booking> book = mt.find(query, Booking.class , "bookings");
+	return book;
+}
+
+
 	
 	
 }

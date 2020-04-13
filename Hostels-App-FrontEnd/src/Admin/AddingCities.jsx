@@ -47,9 +47,7 @@ class AddingCities extends React.Component{
   <p class="lead">This is the City Adding Page.</p>
   <hr class="my-4"/>
   <p>Cities will be reflected on Main Site.</p>
-  <p class="lead">
-    <a class="btn btn-primary btn-lg" href="/admin" role="button">Home!</a>
-  </p>
+ 
 </div>
       <br></br>
            <div class ="container">       

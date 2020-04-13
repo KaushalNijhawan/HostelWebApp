@@ -2,13 +2,17 @@ import React from 'react';
 import Axios from 'axios';
 import NavDisplay from '../NavBar/navbar';
 import { Redirect } from 'react-router-dom';
+import LoggedInNabar from '../NavBar/LoggedInNavbar';
 
 class OwnerRequest extends React.Component{
-   constructor(){
-       super();
+   constructor(props){
+       super(props);
+       console.log(this.props);
        this.state={
            requests:[],
-           message:""
+           message:"",
+           logged:this.props.location.state.logged,
+           name:this.props.location.state.name
        }
    }
    HandleClickReject=(event)=>{
@@ -81,10 +85,10 @@ class OwnerRequest extends React.Component{
         ));
        return(
 <div>
-        <NavDisplay/>
+{this.state.logged===true ? <LoggedInNabar name ={this.state.name}/> : <NavDisplay/>}
         <div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <h1 class="display-4">HOLA ADMIN!</h1>
+    <h1 class="display-4">{"HOLA " +this.state.name.toUpperCase() + "!"}</h1>
     <p class="lead">List of the Owners Request!</p>
   </div>
   

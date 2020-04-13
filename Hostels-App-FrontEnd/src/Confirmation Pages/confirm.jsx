@@ -3,34 +3,25 @@ import FooterDisplay from '../HostelDisplay/footer';
 import NavDisplay from '../NavBar/navbar';
 import Axios from 'axios';
 import './oop-image.css';
+import LoggedInNabar from '../NavBar/LoggedInNavbar';
 
 class CancelledBooking extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      hostelname: this.props.match.params.hname,
-      user: this.props.match.params.username
+    this.state={
+      logged:this.props.location.state.logging,
+    name:this.props.location.state.username,
+    customerLogged : this.props.location.state?.customerLogged,
+    ownerLogged:this.props.location.state?.ownerLogged
     }
+    
   }
 
-  componentDidMount() {
-    const user = {
-      hostelName: this.state.hostelname,
-      userName: this.state.user
-    }
-
-    console.log(user)
-    Axios.post('http://localhost:8080/' + this.state.user + '/' + this.state.hostelname + '/cancelbooking', user)
-      .then(res => {
-        this.setState({ status: res.data });
-        console.log(res.data);
-
-      })
-  }
+  
   render() {
     return (<div>
 
-      <NavDisplay />
+{this.state.logged===true ? <LoggedInNabar name={this.state.name} customer ={this.state.customerLogged} owner ={this.state.ownerLogged}></LoggedInNabar> : <NavDisplay logging ={this.state.logged}/>} 
       <div class="jumbotron">
         <h1 class="display-4">Booking Sucessfully Cancelled</h1>
         <hr class="my-4" />

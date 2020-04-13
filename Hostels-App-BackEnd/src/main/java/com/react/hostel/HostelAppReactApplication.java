@@ -69,7 +69,7 @@ public class HostelAppReactApplication {
 
 	@RequestMapping("/displayusercount")
 	long userCount() {
-		return hd.userCount();
+		return (hd.userCount()-1);
 	}
 	
 	@RequestMapping("/displayownercount")
@@ -158,5 +158,33 @@ public class HostelAppReactApplication {
     @PostMapping("/AcceptRequest")
     public String acceptingRequest(@RequestBody Hostel obj) {
     	return hd.acceptingRequest(obj);
+    }
+    @PostMapping("/bookingConfirmation")
+    public String BookingConfirmation(@RequestBody Booking booking) {
+    	return hd.confirmBooking(booking);
+    } 
+    @RequestMapping("/AcceptConfirm/{username}")
+    public String BookingConfirmation(@PathVariable("username") String username) {
+          return hd.acceptConfirm(username);    	
+    }
+    @RequestMapping("/RejectConfirm/{username}")
+    public String BookingRejectConfirmation(@PathVariable("username") String username) {
+          return hd.rejectConfirm(username);    	
+    }
+    @RequestMapping("/displayBookingsCount")
+    public long displaybookings() {
+    	return hd.displayBookingsCount();
+    }
+    @RequestMapping("/displayHostelsCount")
+    public long displayHostels() {
+    	return hd.displayHostelsCount();
+    }
+    @RequestMapping("/displayCitiesCount")
+    public long displayCities() {
+    	return hd.displayCityCount();
+    }
+    @RequestMapping("/getBooking/{username}")
+    public List<Booking> getbook(@PathVariable("username") String username){
+    	return hd.getBooking(username);
     }
 }
